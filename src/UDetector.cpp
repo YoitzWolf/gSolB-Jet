@@ -2,6 +2,7 @@
 #include "UDetector.h"
 
 #include <G4RunManager.hh>
+#include "CSVSaver.h"
 
 
 USensitiveDetector::USensitiveDetector(G4String name) : G4VSensitiveDetector(name)
@@ -32,10 +33,26 @@ G4bool USensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* story) 
 
 	auto e = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
 	G4AnalysisManager* man = G4AnalysisManager::Instance();
+
 	man->FillNtupleIColumn(0, e);
-	man->FillNtupleDColumn(1, detectorPosition[0]);
-	man->FillNtupleDColumn(2, detectorPosition[1]);
-	man->FillNtupleDColumn(3, detectorPosition[2]);
+	man->FillNtupleSColumn(1, step->GetTrack()->GetParticleDefinition()->GetParticleName());
+	man->FillNtupleDColumn(2, detectorPosition[0]);
+	man->FillNtupleDColumn(3, detectorPosition[1]);
+	man->FillNtupleDColumn(4, detectorPosition[2]);
+	man->FillNtupleDColumn(5, step->GetTrack()->GetKineticEnergy());
 	man->AddNtupleRow(0);
+
+	auto t = CSVTable::getWriter();
+	t->write(
+		{
+			step->GetTrack()->GetParticleDefinition()->GetParticleName(),
+			std::to_string(detectorPosition[0]),
+			std::to_string(detectorPosition[1]),
+			std::to_string(detectorPosition[2]),
+			std::to_string(step->GetTrack()->GetKineticEnergy())
+
+		}
+	);
+
 	return false;
 }

@@ -1,0 +1,3 @@
+/detector/set_plate_thickness {THICKNESS} mm
+/run/reinitializeGeometry true
+/run/beamOn 100

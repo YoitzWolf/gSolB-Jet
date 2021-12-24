@@ -33,7 +33,7 @@ file(GLOB mainH ${PROJECT_SOURCE_DIR}/*.h)
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(gSol gSolB.cpp ${sources} ${headers} "include/UPrimaryGeneratorAction.h" "include/UMaterials.h" "src/UDetectorConstruction.cpp"  "src/UPhysicsList.cpp" "src/UDetector.cpp" "include/URunAction.h" "src/URunAction.cpp")
+add_executable(gSol gSolB.cpp ${sources} ${headers} "include/UPrimaryGeneratorAction.h" "include/UMaterials.h" "src/UDetectorConstruction.cpp"  "src/UPhysicsList.cpp" "src/UDetector.cpp" "include/URunAction.h" "src/URunAction.cpp" )
 target_link_libraries(gSol ${Geant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
@@ -43,6 +43,7 @@ set(gSOL_SCRIPTS
   gSolJet.out
   cll.mac
   vis.mac
+  single_action.mac
   )
 
 foreach(_script ${gSOL_SCRIPTS})

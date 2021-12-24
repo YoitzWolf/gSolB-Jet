@@ -3,33 +3,79 @@
 #include "UMaterials.h"
 #include "UDetectorConstruction.h"
 #include "UDetector.h"
+#include "CSVSaver.h"
 
-G4VPhysicalVolume* UDetectorConstruction::Construct() {
+UDetectorConstruction::UDetectorConstruction() {
 
-	// Standart Box World
+	this->messenger = new G4GenericMessenger(
+		this, "/detector/",
+		"UDetectorConstruction messenger"
+	);
 
+	messenger->DeclareMethod(
+		"set_plate_thickness",
+		&UDetectorConstruction::setThickness,
+		"Plate thikness useage"
+	);
+
+	messenger->DeclareMethod(
+		"set_plate_material",
+		&UDetectorConstruction::setMaterial,
+		"Plate material useage"
+	);
+
+}
+
+void UDetectorConstruction::setMaterial(G4String s) {
+	G4NistManager* nist = G4NistManager::Instance();
+	nist->SetVerbose(1);
+	this->plateMaterial = nist->FindOrBuildMaterial(s);
+	CSVTable::globals["material"] = s;
+}
+
+void UDetectorConstruction::setThickness(G4double s) {
+	plateThick = s;
+	CSVTable::globals["thickness"] = std::to_string((int)round(s));
+	//bool a;
+	//std::cin >> a;
+}
+
+void UDetectorConstruction::baseConfig() {
 	G4NistManager* nist = G4NistManager::Instance();
 	nist->SetVerbose(1);
 
+	this->plateMaterial = nist->FindOrBuildMaterial("G4_Pb");
+	this->plateThick = 100 * mm;
+
+	
+
+}
+
+G4VPhysicalVolume* UDetectorConstruction::Construct() {
+
+	auto plate = MakePlate(this->plateMaterial, this -> plateThick);
+
+	// Standart Box World
 	G4double worldX = 0.2 * meter;
 	G4double worldY = 0.1 * meter;
 	G4double worldZ = 0.1 * meter;
 
-	G4Box* worldSolid = new G4Box(
+	this->worldSolid = new G4Box(
 		"world", worldX, worldY, worldZ);
 	// x = 5, y = 1, z = 1 meters
 
-	G4LogicalVolume* worldLogic = new G4LogicalVolume(
+	this->worldLogic = new G4LogicalVolume(
 		worldSolid, vacuum, "worldLogic");
 
-	G4VPhysicalVolume* world = new G4PVPlacement(
+	this->world = new G4PVPlacement(
 		0, G4ThreeVector(0, 0, 0), worldLogic, "World_phys", 0, false, 0, true);
 
-	//
-	G4double thin = 10 * mm;
-	auto mat = nist->FindOrBuildMaterial("G4_Ti");
-	auto plate = MakePlate(mat, thin);
-	//auto detector = MakeDetector();
+	G4double worldInnerX = (worldY - 1 * mm);
+	G4double worldInnerY = (worldY - 1 * mm);
+	G4double worldInnerZ = (worldY - 1 * mm);
+	this->soilidbox = new G4Box("solid_box", 5 * mm, worldInnerY / 100, (worldInnerZ - 0.5 * mm) / 100);
+	this->logicDetectorUnits = new G4LogicalVolume(soilidbox, vacuum, "logicDetectorUnits");
+	logicDetectorUnits->SetVisAttributes(G4VisAttributes(G4Colour(0.6, 0.1, 0.2)));
 
 	G4RotationMatrix* rotation = new G4RotationMatrix;
 	rotation->rotateY(M_PI / 2. * rad);
@@ -39,29 +85,26 @@ G4VPhysicalVolume* UDetectorConstruction::Construct() {
 		worldLogic,
 		false, 0, true);
 
-	G4ThreeVector detectorPos = G4ThreeVector(0, 0, thin);
+	G4ThreeVector detectorPos = G4ThreeVector(0, 0, this->plateThick);
 	/*
 	new G4PVPlacement(0, detectorPos, detector.second, "Detector_phys",
 		plate.second,
 		false, 0, true);
 	*/
-
-	G4double worldInnerX = (worldY - 1 * mm);
-	G4double worldInnerY = (worldY - 1 * mm);
-	G4double worldInnerZ = (worldY - 1 * mm);
 	
-	G4Box* soilidbox = new G4Box("solid_box", 5*mm, worldInnerY / 100, (worldInnerZ - 0.5 * mm) / 100);
-	logicDetectorUnits = new G4LogicalVolume(soilidbox, vacuum, "logicDetectorUnits");
+	/*
+	this->soilidbox->SetXHalfLength(5 * mm);
+	this->soilidbox->SetYHalfLength(worldInnerY / 100);
+	*/
 
-	logicDetectorUnits->SetVisAttributes(G4VisAttributes(G4Colour(0.6, 0, 0)));
 	for (G4int i = 0; i < 100; i++) {
 		for (G4int j = 0; j < 100; j++) {
 			//+ (worldY / 100) * (i+0.5)
 			//+ (worldZ / 100) * (j + 0.5)
 			G4VPhysicalVolume* pDet = new G4PVPlacement(
 				0,
-				G4ThreeVector(-worldX + 10*mm, -worldInnerY + 2 * worldInnerY * (i) / 100, -(worldInnerZ - 0.5 * mm) + 2 * (worldInnerZ - 0.5 * mm) * (j)/100),
-				logicDetectorUnits, "phys_detect", worldLogic, false, j + i * 100, false
+				G4ThreeVector(-(this->plateThick + 5 * mm), -worldInnerY + 2 * worldInnerY * (i) / 100, -(worldInnerZ - 0.5 * mm) + 2 * (worldInnerZ - 0.5 * mm) * (j) / 100),
+				logicDetectorUnits, "phys_detector_id=" + std::to_string(j * i * 100), worldLogic, false, j + i * 100, false
 			);
 		}
 	}

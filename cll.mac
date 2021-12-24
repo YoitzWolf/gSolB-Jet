@@ -1,0 +1,25 @@
+
+
+#/run/verbose 1
+#/event/verbose 1
+#/tracking/verbose 1
+
+/detector/set_plate_material G4_Pb
+
+/control/execute vis.mac
+
+/primaryGenerator/set_gun_power 1
+#Thickness of plate in mm
+/control/loop single_action.mac THICKNESS 5 100 5
+
+/primaryGenerator/set_gun_power 0.1 
+#Thickness of plate in mm
+/control/loop single_action.mac THICKNESS 5 100 5
+
+/primaryGenerator/set_gun_power 0.01
+#Thickness of plate in mm
+/control/loop single_action.mac THICKNESS 5 100 5
+
+/primaryGenerator/set_gun_power 0.001 
+#Thickness of plate in mm
+/control/loop single_action.mac THICKNESS 5 100 5

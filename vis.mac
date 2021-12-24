@@ -3,7 +3,6 @@
 #
 #
 #/control/execute geometry.mac
-/control/execute cll.mac
 /run/initialize
 #/control/execute primary.mac
 # Use these open statements to open selected visualization
@@ -46,7 +45,7 @@
 #/vis/viewer/set/lineSegmentsPerCircle 100
 #
 # Draw coordinate axes:
-/vis/scene/add/axes 0 0 0 0.1
+#/vis/scene/add/axes 0 0 0 0.1
 #
 # Draw smooth trajectories at end of event, showing trajectory points
 # as markers 2 pixels wide:

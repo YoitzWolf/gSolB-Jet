@@ -11,12 +11,23 @@
 #include "include/UPhysicsList.h"
 #include "include/UActionInitialization.h"
 #include "include/UMaterials.h"
+#include "include/CSVSaver.h"
+
 
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
+
+	auto table = CSVTable::getWriter();
+	table->set_dir("./OUTPUT/CUSTOM/");
+	
+	//bool g = table.get();
+	//table->open_file("BASE.txt");
+	//table.close();
+	bool a;
+	//std::cin >> a;
 	
 	// construct the default run manager
 	auto runManager = G4RunManagerFactory::CreateRunManager();
@@ -24,8 +35,10 @@ int main(int argc, char* argv[])
 	int nThreads = 4;
 	runManager->SetNumberOfThreads(nThreads);
 
+	auto detector_constr = new UDetectorConstruction();
+	detector_constr->baseConfig();
 	// set mandatory initialization classes
-	runManager->SetUserInitialization(new UDetectorConstruction() );
+	runManager->SetUserInitialization(detector_constr);
 	runManager->SetUserInitialization(new UPhysicsList() );
 	runManager->SetUserInitialization(new UActionInitialisation() );
 
@@ -45,14 +58,10 @@ int main(int argc, char* argv[])
 	
 
 	G4UImanager* UIManager = G4UImanager::GetUIpointer();
-	UIManager->ApplyCommand("/run/verbose 1");
-	UIManager->ApplyCommand("/event/verbose 1");
-	UIManager->ApplyCommand("/tracking/verbose 1");
 	UIManager->ApplyCommand("/control/execute cll.mac");
-	UIManager->ApplyCommand("/control/execute vis.mac");
-	//
-	//UIManager->ApplyCommand("/vis/open OGL");
-	//UIManager->ApplyCommand("/vis/drawVolume");
+
+	
+
 
 
 	ui->SessionStart();
