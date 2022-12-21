@@ -27,13 +27,15 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 #
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.h)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hpp)
 file(GLOB mainS ${PROJECT_SOURCE_DIR}/*.cpp)
 file(GLOB mainH ${PROJECT_SOURCE_DIR}/*.h)
+file(GLOB mainH ${PROJECT_SOURCE_DIR}/*.hpp)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(gSol gSolB.cpp ${sources} ${headers} "include/UPrimaryGeneratorAction.h" "include/UMaterials.h" "src/UDetectorConstruction.cpp"  "src/UPhysicsList.cpp" "src/UDetector.cpp" "include/URunAction.h" "src/URunAction.cpp" )
+add_executable(gSol gSolB.cpp ${sources} ${headers} "include/UPrimaryGeneratorAction.hpp" "include/UMaterials.hpp" "src/UDetectorConstruction.cpp"  "src/UPhysicsList.cpp" "src/UDetector.cpp" "include/URunAction.hpp" "src/URunAction.cpp" )
 target_link_libraries(gSol ${Geant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
