@@ -7,11 +7,11 @@
 #include "G4UIExecutive.hh"
 #include "G4VisExecutive.hh"
 
-#include "include/UDetectorConstruction.h"
-#include "include/UPhysicsList.h"
-#include "include/UActionInitialization.h"
-#include "include/UMaterials.h"
-#include "include/CSVSaver.h"
+#include "include/UDetectorConstruction.hpp"
+#include "include/UPhysicsList.hpp"
+#include "include/UActionInitialization.hpp"
+#include "include/UMaterials.hpp"
+#include "include/CSVSaver.hpp"
 
 
 
