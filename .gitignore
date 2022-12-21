@@ -215,6 +215,7 @@ ecf/
 rcf/
 
 # Windows Store app package directories and files
+out/
 AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml
@@ -362,3 +363,16 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /build/
+---CMakeSettings.json
+CMakeCache.txt
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
+CMakeFiles/3.21.3/VCTargetsPath.vcxproj
+CMakeFiles/3.21.3/CompilerIdC/CMakeCCompilerId.c
+CMakeFiles/3.21.3/CompilerIdC/CompilerIdC.exe
+CMakeFiles/3.21.3/CompilerIdC/CompilerIdC.vcxproj
+CMakeFiles/3.21.3/CompilerIdCXX/CMakeCXXCompilerId.cpp
+CMakeFiles/3.21.3/CompilerIdCXX/CompilerIdCXX.exe
+CMakeFiles/3.21.3/CompilerIdCXX/CompilerIdCXX.vcxproj

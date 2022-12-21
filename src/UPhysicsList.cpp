@@ -1,5 +1,5 @@
 
-#include "UPhysicsList.h"
+#include "UPhysicsList.hpp"
 
 
 // Physic lists (contained inside the Geant4 distribution)

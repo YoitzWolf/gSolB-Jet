@@ -13,13 +13,13 @@ else()
   find_package(Geant4 REQUIRED)
 endif()
 
-
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
 # Setup include directory for this project
 #
 include(${Geant4_USE_FILE})
 include_directories(${PROJECT_SOURCE_DIR}/include)
+
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project

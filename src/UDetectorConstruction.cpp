@@ -1,9 +1,9 @@
 
 
-#include "UMaterials.h"
-#include "UDetectorConstruction.h"
-#include "UDetector.h"
-#include "CSVSaver.h"
+#include "UMaterials.hpp"
+#include "UDetectorConstruction.hpp"
+#include "UDetector.hpp"
+#include "CSVSaver.hpp"
 
 UDetectorConstruction::UDetectorConstruction() {
 
@@ -141,7 +141,7 @@ std::pair<G4Box*, G4LogicalVolume*> UDetectorConstruction::MakeDetector()
 	Z = 6;
 	G4Element* elC = new G4Element("Carbon", "C", Z, A);
 
-	// Define PMMA (C502H8) ~ Оргстекло
+	// Define PMMA (C502H8) ~ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	G4Material* PMMA = new G4Material("PMMA", 1.19 * g / cm3, 3);
 	PMMA->AddElement(elC, 5);
 	PMMA->AddElement(elO, 2);

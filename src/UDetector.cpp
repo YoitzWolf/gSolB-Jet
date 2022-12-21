@@ -1,8 +1,8 @@
 
-#include "UDetector.h"
+#include "UDetector.hpp"
 
-#include <G4RunManager.hh>
-#include "CSVSaver.h"
+#include "G4RunManager.hh"
+#include "CSVSaver.hpp"
 
 
 USensitiveDetector::USensitiveDetector(G4String name) : G4VSensitiveDetector(name)

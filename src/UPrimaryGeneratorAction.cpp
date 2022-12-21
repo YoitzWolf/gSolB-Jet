@@ -1,7 +1,7 @@
-#include <G4RunManager.hh>
+#include "G4RunManager.hh"
 
-#include "UPrimaryGeneratorAction.h"
-#include "CSVSaver.h"
+#include "UPrimaryGeneratorAction.hpp"
+#include "CSVSaver.hpp"
 #include <string>
 
 UPrimaryGeneratorAction::UPrimaryGeneratorAction() { 

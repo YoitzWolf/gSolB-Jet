@@ -1,9 +1,9 @@
 #ifndef UActionInitialization_h
 #define UActionInitialization_h 1
 
-#include "UActionInitialization.h"
-#include "UPrimaryGeneratorAction.h"
-#include "URunAction.h"
+#include "UActionInitialization.hpp"
+#include "UPrimaryGeneratorAction.hpp"
+#include "URunAction.hpp"
 
 void UActionInitialisation::Build() const
 {
