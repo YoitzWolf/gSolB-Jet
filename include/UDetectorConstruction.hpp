@@ -4,7 +4,7 @@
 #define UDetectorConstruction_h 1
 
 #include <utility>
-#include <corecrt_math_defines.h>
+//#include <corecrt_math_defines.h>
 #include <vector>
 
 #include "G4SystemOfUnits.hh"
